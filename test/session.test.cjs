@@ -28,6 +28,16 @@ test('constructing a session performs no network requests; preview releases lock
     await session.run(f.cfg, 'preview'); assert.equal(f.writes().length, 0);
     assert.equal(session.running, false); assert.equal(manager.held.size, 0);
 });
+test('auto session keeps polling after an empty course list', async () => {
+    const f = fixture(); let scans = 0;
+    const readCourses = f.api.courses.bind(f.api);
+    f.api.courses = async () => ++scans === 1 ? [] : readCourses();
+    const session = new Session({ locks: locks(), store: f.store, apiFactory: () => f.api });
+    session.wait = async () => {};
+    await session.run(f.cfg, 'auto');
+    assert.equal(scans, 2); assert.equal(f.writes().length, 1);
+    assert.equal(session.engine.state.paused, false); assert.equal(session.engine.state.completed, true);
+});
 test('new run resets completed state instead of carrying previous targets into a new run', async () => {
     const f = fixture(), session = new Session({ locks: locks(), store: f.store, apiFactory: () => f.api });
     await session.run(f.cfg, 'auto'); assert.equal(session.engine.state.completed, true);

@@ -311,16 +311,22 @@ class HustAPI {
         let declaredCount = null;
         for (let page = 1; page <= this.config.maxPages; page++) {
             const result = checkJSON(await this.request(path, { ...params, page, limit: this.config.pageSize }));
-            if (!Array.isArray(result.data)) fail('schema', '列表响应缺少 data 数组');
-            const batch = result.data;
-            const signature = JSON.stringify(batch.map(stableJSON).sort());
-            if (batch.length && signatures.has(signature)) fail('schema', '分页重复，不能确认读取完整');
-            if (batch.length) signatures.add(signature);
             let count = null;
             if (result.count !== undefined && result.count !== null) {
                 if (!/^\d+$/.test(id(result.count)) || !Number.isSafeInteger(Number(result.count))) fail('schema', '列表总数异常');
                 count = Number(result.count);
             }
+            // Before enrollment opens, a successful first page may omit data to mean empty.
+            // Missing data later cannot terminate pagination without accepting partial rows.
+            if (result.data === undefined) {
+                if (page === 1 && (count === null || count === 0)) return rows;
+                fail('schema', '非空或后续分页响应缺少 data 数组');
+            }
+            if (!Array.isArray(result.data)) fail('schema', '列表响应 data 字段不是数组');
+            const batch = result.data;
+            const signature = JSON.stringify(batch.map(stableJSON).sort());
+            if (batch.length && signatures.has(signature)) fail('schema', '分页重复，不能确认读取完整');
+            if (batch.length) signatures.add(signature);
             // The old script observed count=0 with nonempty data. Treat 0 as unknown,
             // not proof that a full page is the entire list; continue when the page is full.
             if (count === 0 && (batch.length || rows.length)) count = null;
