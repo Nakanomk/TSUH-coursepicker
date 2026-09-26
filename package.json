@@ -1,0 +1,12 @@
+{
+  "name": "hust-course-picker",
+  "version": "2.0.0",
+  "private": true,
+  "description": "A dependency-free, configurable userscript refactor of the supplied HUST script",
+  "scripts": {
+    "test": "node --test test/*.test.cjs",
+    "build": "node scripts/build.cjs",
+    "check": "node --check dist/hust-course-picker.user.js"
+  },
+  "engines": { "node": ">=22" }
+}

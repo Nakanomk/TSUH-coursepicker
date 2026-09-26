@@ -1,0 +1,15 @@
+{
+  "passed": 9,
+  "checks": [
+    "boot mounts one panel and issues no API calls",
+    "preview displays ambiguity and never submits",
+    "candidate button sets all identity pins without changing teacher",
+    "confirmation button submits exactly once and verifies mock server state",
+    "recreated UI restores saved settings without automatic restart",
+    "lock-conflict fixture produces visible error without API calls",
+    "pending snapshot survives UI recreation and locks editor while reconciliation remains read-only",
+    "explicit acknowledgement clears exact pending record and unlocks form",
+    "no uncaught browser exceptions and zero actual network requests"
+  ],
+  "scope": "Chromium about:blank DOM test with injected in-memory fetch/storage/lock fixtures; not live school or actual userscript-manager verification"
+}
