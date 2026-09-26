@@ -2,331 +2,331 @@ TAP version 13
 # Subtest: request queue serializes simultaneous callers and applies one global gap
 ok 1 - request queue serializes simultaneous callers and applies one global gap
   ---
-  duration_ms: 3.844209
+  duration_ms: 5.515559
   type: 'test'
   ...
 # Subtest: a queued request rechecks pause before its guard and fetch
 ok 2 - a queued request rechecks pause before its guard and fetch
   ---
-  duration_ms: 0.500303
+  duration_ms: 0.83861
   type: 'test'
   ...
 # Subtest: only the configured origin and whitelisted endpoints are allowed
 ok 3 - only the configured origin and whitelisted endpoints are allowed
   ---
-  duration_ms: 0.246967
+  duration_ms: 0.3811
   type: 'test'
   ...
 # Subtest: adapter preserves original GET enrollment parameters and same-origin credentials
 ok 4 - adapter preserves original GET enrollment parameters and same-origin credentials
   ---
-  duration_ms: 0.319751
+  duration_ms: 0.474484
   type: 'test'
   ...
 # Subtest: course and class lists use POST form parameters from the old script
 ok 5 - course and class lists use POST form parameters from the old script
   ---
-  duration_ms: 0.419712
+  duration_ms: 0.604259
   type: 'test'
   ...
-# Subtest: a successful first page without data is an empty list
-ok 6 - a successful first page without data is an empty list
+# Subtest: successful first-page empty sentinels are treated as an empty list
+ok 6 - successful first-page empty sentinels are treated as an empty list
   ---
-  duration_ms: 0.20174
+  duration_ms: 0.574487
   type: 'test'
   ...
-# Subtest: missing or malformed data cannot truncate a nonempty list
-ok 7 - missing or malformed data cannot truncate a nonempty list
+# Subtest: empty sentinels and malformed data cannot truncate a nonempty list
+ok 7 - empty sentinels and malformed data cannot truncate a nonempty list
   ---
-  duration_ms: 0.399274
+  duration_ms: 0.731062
   type: 'test'
   ...
 # Subtest: pagination continues across short pages when a positive count promises more
 ok 8 - pagination continues across short pages when a positive count promises more
   ---
-  duration_ms: 0.174369
+  duration_ms: 0.222957
   type: 'test'
   ...
 # Subtest: count=0 with a short nonempty page works as the legacy convention
 ok 9 - count=0 with a short nonempty page works as the legacy convention
   ---
-  duration_ms: 0.130833
+  duration_ms: 0.173909
   type: 'test'
   ...
 # Subtest: count=0 with a full page is not assumed complete
 ok 10 - count=0 with a full page is not assumed complete
   ---
-  duration_ms: 0.204032
+  duration_ms: 0.278004
   type: 'test'
   ...
 # Subtest: reordered duplicate pages are detected
 ok 11 - reordered duplicate pages are detected
   ---
-  duration_ms: 0.176356
+  duration_ms: 0.234265
   type: 'test'
   ...
 # Subtest: changed count, premature end, excessive rows and invalid count fail closed
 ok 12 - changed count, premature end, excessive rows and invalid count fail closed
   ---
-  duration_ms: 0.318665
+  duration_ms: 0.49759
   type: 'test'
   ...
 # Subtest: HTML login page, 429 and malformed JSON classify separately
 ok 13 - HTML login page, 429 and malformed JSON classify separately
   ---
-  duration_ms: 0.293949
+  duration_ms: 0.407596
   type: 'test'
   ...
 # Subtest: a failed request does not poison the shared queue
 ok 14 - a failed request does not poison the shared queue
   ---
-  duration_ms: 0.179754
+  duration_ms: 0.288187
   type: 'test'
   ...
 # Subtest: both target and response normalization remove width, spaces, and zero-width differences
 ok 15 - both target and response normalization remove width, spaces, and zero-width differences
   ---
-  duration_ms: 4.676726
+  duration_ms: 4.358191
   type: 'test'
   ...
 # Subtest: teacher must be specified, duplicate course targets rejected, settings frozen
 ok 16 - teacher must be specified, duplicate course targets rejected, settings frozen
   ---
-  duration_ms: 0.534096
+  duration_ms: 0.345798
   type: 'test'
   ...
 # Subtest: legacy exclusions are editable, not hidden in matching logic
 ok 17 - legacy exclusions are editable, not hidden in matching logic
   ---
-  duration_ms: 0.181325
+  duration_ms: 0.122791
   type: 'test'
   ...
 # Subtest: multi-row classes merge teachers, including KTFZR and full-width delimiters
 ok 18 - multi-row classes merge teachers, including KTFZR and full-width delimiters
   ---
-  duration_ms: 0.830986
+  duration_ms: 0.595224
   type: 'test'
   ...
 # Subtest: inconsistent multi-row TYPE and unknown TYPE stop safely
 ok 19 - inconsistent multi-row TYPE and unknown TYPE stop safely
   ---
-  duration_ms: 0.200754
+  duration_ms: 0.131809
   type: 'test'
   ...
 # Subtest: mismatched course ids, missing ids, and cross-term class rows rejected
 ok 20 - mismatched course ids, missing ids, and cross-term class rows rejected
   ---
-  duration_ms: 0.334603
+  duration_ms: 0.21528
   type: 'test'
   ...
 # Subtest: courses in other terms do not create artificial same-name ambiguity
 ok 21 - courses in other terms do not create artificial same-name ambiguity
   ---
-  duration_ms: 0.274597
+  duration_ms: 0.164983
   type: 'test'
   ...
 # Subtest: full detection does not treat blank/null fields as known counts
 ok 22 - full detection does not treat blank/null fields as known counts
   ---
-  duration_ms: 0.239538
+  duration_ms: 0.156264
   type: 'test'
   ...
 # Subtest: every duplicate course is checked before deduplication
 ok 23 - every duplicate course is checked before deduplication
   ---
-  duration_ms: 0.403412
+  duration_ms: 0.278487
   type: 'test'
   ...
 # Subtest: detail must agree with the listed course and plan
 ok 24 - detail must agree with the listed course and plan
   ---
-  duration_ms: 0.307738
+  duration_ms: 0.237857
   type: 'test'
   ...
 # Subtest: unique name+teacher enrolls once and verifies actual server state
 ok 25 - unique name+teacher enrolls once and verifies actual server state
   ---
-  duration_ms: 3.250001
+  duration_ms: 3.361876
   type: 'test'
   ...
 # Subtest: preview reads the target but never calls enrollment or writes a pending record
 ok 26 - preview reads the target but never calls enrollment or writes a pending record
   ---
-  duration_ms: 0.532805
+  duration_ms: 0.569543
   type: 'test'
   ...
 # Subtest: existing desired selection completes without write, other teacher blocks
 ok 27 - existing desired selection completes without write, other teacher blocks
   ---
-  duration_ms: 0.605864
+  duration_ms: 0.593763
   type: 'test'
   ...
 # Subtest: same teacher in two classes is ambiguous even when one is full
 ok 28 - same teacher in two classes is ambiguous even when one is full
   ---
-  duration_ms: 0.279075
+  duration_ms: 0.310348
   type: 'test'
   ...
 # Subtest: an explicit class pin resolves ambiguity
 ok 29 - an explicit class pin resolves ambiguity
   ---
-  duration_ms: 1.180766
+  duration_ms: 1.415572
   type: 'test'
   ...
 # Subtest: teacher disambiguates two same-name course plans
 ok 30 - teacher disambiguates two same-name course plans
   ---
-  duration_ms: 0.555167
+  duration_ms: 0.547644
   type: 'test'
   ...
 # Subtest: a selected class in another plan is not hidden by target pins
 ok 31 - a selected class in another plan is not hidden by target pins
   ---
-  duration_ms: 0.377114
+  duration_ms: 0.390905
   type: 'test'
   ...
 # Subtest: a full class is waited for, then submitted when capacity becomes available
 ok 32 - a full class is waited for, then submitted when capacity becomes available
   ---
-  duration_ms: 0.557549
+  duration_ms: 0.385393
   type: 'test'
   ...
 # Subtest: accepted response without selected state remains pending and never repeats
 ok 33 - accepted response without selected state remains pending and never repeats
   ---
-  duration_ms: 0.812276
+  duration_ms: 0.647042
   type: 'test'
   ...
 # Subtest: network timeout after guard persists journal and switches to read-only reconciliation
 ok 34 - network timeout after guard persists journal and switches to read-only reconciliation
   ---
-  duration_ms: 0.722724
+  duration_ms: 0.594475
   type: 'test'
   ...
 # Subtest: refresh with changed teacher or term still checks the original pending snapshot first
 ok 35 - refresh with changed teacher or term still checks the original pending snapshot first
   ---
-  duration_ms: 0.421176
+  duration_ms: 0.422076
   type: 'test'
   ...
 # Subtest: one uncertain write prevents all later targets from being submitted
 ok 36 - one uncertain write prevents all later targets from being submitted
   ---
-  duration_ms: 0.294334
+  duration_ms: 0.319195
   type: 'test'
   ...
 # Subtest: an explicit nonzero business rejection clears pending and obeys cooldown
 ok 37 - an explicit nonzero business rejection clears pending and obeys cooldown
   ---
-  duration_ms: 0.569347
+  duration_ms: 0.641282
   type: 'test'
   ...
 # Subtest: malformed enrollment response never clears pending
 ok 38 - malformed enrollment response never clears pending
   ---
-  duration_ms: 0.294133
+  duration_ms: 0.311328
   type: 'test'
   ...
 # Subtest: pause after a write does not pretend that the write was cancelled
 ok 39 - pause after a write does not pretend that the write was cancelled
   ---
-  duration_ms: 0.278693
+  duration_ms: 0.308835
   type: 'test'
   ...
 # Subtest: pause during a read prevents the later submission
 ok 40 - pause during a read prevents the later submission
   ---
-  duration_ms: 0.208439
+  duration_ms: 0.232242
   type: 'test'
   ...
 # Subtest: journal failure before send blocks the outgoing write
 ok 41 - journal failure before send blocks the outgoing write
   ---
-  duration_ms: 0.241294
+  duration_ms: 0.260555
   type: 'test'
   ...
 # Subtest: legacy journal is verified and removed only after server confirmation
 ok 42 - legacy journal is verified and removed only after server confirmation
   ---
-  duration_ms: 0.245689
+  duration_ms: 0.235669
   type: 'test'
   ...
 # Subtest: corrupt pending is not discarded, and competing pending records block
 ok 43 - corrupt pending is not discarded, and competing pending records block
   ---
-  duration_ms: 0.360681
+  duration_ms: 0.364516
   type: 'test'
   ...
 # Subtest: compare-before-clear prevents removing a newer pending record
 ok 44 - compare-before-clear prevents removing a newer pending record
   ---
-  duration_ms: 0.291202
+  duration_ms: 0.307557
   type: 'test'
   ...
 # Subtest: unknown TYPE aborts the round without a submission
 ok 45 - unknown TYPE aborts the round without a submission
   ---
-  duration_ms: 0.178348
+  duration_ms: 0.187421
   type: 'test'
   ...
 # Subtest: simultaneous tick calls cannot overlap
 ok 46 - simultaneous tick calls cannot overlap
   ---
-  duration_ms: 0.278999
+  duration_ms: 0.271546
   type: 'test'
   ...
 # Subtest: Web Lock remains held throughout async work and excludes a second instance
 ok 47 - Web Lock remains held throughout async work and excludes a second instance
   ---
-  duration_ms: 1.406967
+  duration_ms: 1.449732
   type: 'test'
   ...
 # Subtest: old-script lock also prevents a new-script session, releasing the outer lock
 ok 48 - old-script lock also prevents a new-script session, releasing the outer lock
   ---
-  duration_ms: 0.232132
+  duration_ms: 0.255777
   type: 'test'
   ...
 # Subtest: missing lock support fails closed
 ok 49 - missing lock support fails closed
   ---
-  duration_ms: 0.152825
+  duration_ms: 0.145046
   type: 'test'
   ...
 # Subtest: constructing a session performs no network requests; preview releases locks
 ok 50 - constructing a session performs no network requests; preview releases locks
   ---
-  duration_ms: 2.163268
+  duration_ms: 2.232124
   type: 'test'
   ...
 # Subtest: auto session keeps polling after an empty course list
 ok 51 - auto session keeps polling after an empty course list
   ---
-  duration_ms: 1.338591
+  duration_ms: 1.256524
   type: 'test'
   ...
 # Subtest: new run resets completed state instead of carrying previous targets into a new run
 ok 52 - new run resets completed state instead of carrying previous targets into a new run
   ---
-  duration_ms: 1.465327
+  duration_ms: 1.497906
   type: 'test'
   ...
 # Subtest: pause while waiting for locks cannot be lost before engine creation
 ok 53 - pause while waiting for locks cannot be lost before engine creation
   ---
-  duration_ms: 0.301781
+  duration_ms: 0.357018
   type: 'test'
   ...
 # Subtest: manual pending clear cannot run while an auto session still holds a request
 ok 54 - manual pending clear cannot run while an auto session still holds a request
   ---
-  duration_ms: 0.414141
+  duration_ms: 0.445076
   type: 'test'
   ...
 # Subtest: disposed session cannot restart or clear records
 ok 55 - disposed session cannot restart or clear records
   ---
-  duration_ms: 0.22955
+  duration_ms: 0.262643
   type: 'test'
   ...
 1..55
@@ -337,4 +337,4 @@ ok 55 - disposed session cannot restart or clear records
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 73.567044
+# duration_ms 68.935419

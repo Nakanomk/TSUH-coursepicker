@@ -54,17 +54,21 @@ test('course and class lists use POST form parameters from the old script', asyn
     const params = new URLSearchParams(f.calls[1].options.body);
     assert.equal(params.get('faid'), 'P1'); assert.equal(params.get('id'), 'P1'); assert.equal(params.get('fzid'), 'G1');
 });
-test('a successful first page without data is an empty list', async () => {
-    for (const result of [{ code: 0 }, { code: 0, count: 0 }]) {
+test('successful first-page empty sentinels are treated as an empty list', async () => {
+    const results = [
+        { code: 0 }, { code: 0, count: 0 }, { code: 0, count: 0, data: null },
+        { code: 0, count: 0, data: '' }, { code: 0, count: 0, data: ' \t' }, { code: 0, count: 0, data: {} },
+    ];
+    for (const result of results) {
         const f = apiFor([result]);
         assert.deepEqual(await f.api.courses(), []); assert.equal(f.calls.length, 1);
     }
 });
-test('missing or malformed data cannot truncate a nonempty list', async () => {
-    await assert.rejects(apiFor([{ code: 0, count: 1 }]).api.courses(), { kind: 'schema' });
-    const partial = apiFor([{ code: 0, count: 0, data: [{ a: 1 }] }, { code: 0, count: 0 }], config({ pageSize: 1 }));
+test('empty sentinels and malformed data cannot truncate a nonempty list', async () => {
+    await assert.rejects(apiFor([{ code: 0, count: 1, data: null }]).api.courses(), { kind: 'schema' });
+    const partial = apiFor([{ code: 0, count: 0, data: [{ a: 1 }] }, { code: 0, count: 0, data: null }], config({ pageSize: 1 }));
     await assert.rejects(partial.api.courses(), /后续分页/);
-    for (const data of [null, {}, '']) {
+    for (const data of [{ rows: [] }, 'not empty', 0, false]) {
         await assert.rejects(apiFor([{ code: 0, count: 0, data }]).api.courses(), { kind: 'schema' });
     }
 });

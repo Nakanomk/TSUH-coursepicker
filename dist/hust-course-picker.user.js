@@ -251,6 +251,13 @@ const ENDPOINTS = Object.freeze({
 });
 const METHODS = new Map([[ENDPOINTS.courses, 'POST'], [ENDPOINTS.classes, 'POST'], [ENDPOINTS.details, 'GET'], [ENDPOINTS.enroll, 'GET']]);
 const classParams = c => ({ fzid: id(c.FZID), kcbh: id(c.KCBH), faid: id(c.ID), id: id(c.ID), sfid: '' });
+const emptyListData = value => {
+    if (value === undefined || value === null) return true;
+    if (typeof value === 'string') return !value.trim();
+    if (typeof value !== 'object' || Array.isArray(value)) return false;
+    for (const _ in value) return false;
+    return true;
+};
 
 // Shared by sessions on one page: both the queue and last request time survive preview -> auto.
 class RequestQueue {
@@ -316,13 +323,14 @@ class HustAPI {
                 if (!/^\d+$/.test(id(result.count)) || !Number.isSafeInteger(Number(result.count))) fail('schema', '列表总数异常');
                 count = Number(result.count);
             }
-            // Before enrollment opens, a successful first page may omit data to mean empty.
-            // Missing data later cannot terminate pagination without accepting partial rows.
-            if (result.data === undefined) {
-                if (page === 1 && (count === null || count === 0)) return rows;
-                fail('schema', '非空或后续分页响应缺少 data 数组');
+            // Before enrollment opens, the first page may use a null, blank string, or empty
+            // object instead of an array. The same sentinel later would hide partial rows.
+            if (!Array.isArray(result.data)) {
+                const empty = emptyListData(result.data);
+                if (empty && page === 1 && (count === null || count === 0)) return rows;
+                if (empty && page > 1) fail('schema', '后续分页响应为空，未使用不完整列表');
+                fail('schema', '列表响应 data 字段不是数组');
             }
-            if (!Array.isArray(result.data)) fail('schema', '列表响应 data 字段不是数组');
             const batch = result.data;
             const signature = JSON.stringify(batch.map(stableJSON).sort());
             if (batch.length && signatures.has(signature)) fail('schema', '分页重复，不能确认读取完整');
